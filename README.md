@@ -1,139 +1,156 @@
 # Mini CRM System
 
-A lightweight Customer Relationship Management (CRM) system built with FastAPI and SQLite.
+Alright so this is a small CRM thing I built using **FastAPI** and **SQLite**.
+It’s like one of those customer management tools where you can keep track of leads, log calls or emails, and check some basic stats.
+Nothing crazy, just a simple setup that actually works (most of the time).
+
+---
 
 ## Features
 
-✅ **Lead Management**
-- Create, read, update, and delete customer leads
-- Track lead status (New, Interested, In Progress, Closed, Lost)
-- Store contact information (name, company, email, phone)
-- Search and filter leads by name, company, or status
+### Lead Stuff
 
-✅ **Interaction Logging**
-- Log calls, emails, and meetings with leads
-- Track interaction history for each lead
-- Filter interactions by type or lead
+* You can add, edit, delete, and look up leads
+* Track where they’re at (New, Interested, In Progress, etc)
+* Basic info like name, company, email, phone
+* You can also filter and search
 
-✅ **Reporting & Analytics**
-- View leads grouped by status
-- Analyze interaction types
-- Dashboard with comprehensive statistics
-- Top companies by lead count
+### Interaction Stuff
 
-## Project Structure
+* Log when you call, email, or meet someone
+* Each lead has their own little history
+* You can filter by interaction type
+
+### Reports (aka random stats)
+
+* See how many leads are in each status
+* Count how many calls/emails/meetings you’ve logged
+* There’s a dashboard thing too
+* Shows top companies (aka who you talk to the most)
+
+---
+
+## Folder Setup
 
 ```
 mini-crm/
-├── main.py                 # FastAPI application entry point
-├── database.py            # Database configuration
-├── models.py              # SQLAlchemy models
-├── schemas.py             # Pydantic schemas
+├── main.py                 # main FastAPI app
+├── database.py             # database setup
+├── models.py               # models for SQLAlchemy
+├── schemas.py              # pydantic schemas
 ├── routers/
-│   ├── __init__.py
-│   ├── leads.py           # Lead endpoints
-│   ├── interactions.py    # Interaction endpoints
-│   └── reports.py         # Reporting endpoints
-├── requirements.txt       # Python dependencies
-└── README.md             # This file
+│   ├── leads.py            # all lead endpoints
+│   ├── interactions.py     # all interaction endpoints
+│   └── reports.py          # all reporting endpoints
+├── requirements.txt         # dependencies
+└── README.md               # this file
 ```
 
-## Installation
+---
 
-1. **Clone or create the project directory:**
+## How to Run
+
+### Step 1. make a folder
+
 ```bash
 mkdir mini-crm
 cd mini-crm
 ```
 
-2. **Create a virtual environment:**
+### Step 2. make a venv
+
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # windows: venv\Scripts\activate
 ```
 
-3. **Install dependencies:**
+### Step 3. install stuff
+
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Create the routers directory:**
+### Step 4. setup routers
+
 ```bash
 mkdir routers
-touch routers/__init__.py  # On Windows: type nul > routers\__init__.py
+touch routers/__init__.py  # windows: type nul > routers\__init__.py
 ```
 
-## Running the Application
+---
 
-Start the server:
+## Run It
+
 ```bash
 python main.py
 ```
 
-Or use uvicorn directly:
+or
+
 ```bash
 uvicorn main:app --reload
 ```
 
-The API will be available at: `http://localhost:8000`
+then go to [http://localhost:8000](http://localhost:8000)
 
-## API Documentation
+---
 
-Interactive API documentation is available at:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+## API Docs
 
-## API Endpoints
+FastAPI gives you docs automatically which is honestly the best part:
+
+* Swagger → [http://localhost:8000/docs](http://localhost:8000/docs)
+* ReDoc → [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+---
+
+## Endpoints
 
 ### Leads
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/leads/` | Create a new lead |
-| GET | `/leads/` | Get all leads (with filters) |
-| GET | `/leads/{id}` | Get a specific lead |
-| PUT | `/leads/{id}` | Update a lead |
-| DELETE | `/leads/{id}` | Delete a lead |
+| Method | Endpoint      | What it does  |
+| ------ | ------------- | ------------- |
+| POST   | `/leads/`     | add new lead  |
+| GET    | `/leads/`     | get all leads |
+| GET    | `/leads/{id}` | get one lead  |
+| PUT    | `/leads/{id}` | update a lead |
+| DELETE | `/leads/{id}` | delete a lead |
 
-**Query Parameters for GET /leads/:**
-- `name`: Filter by name (partial match)
-- `status`: Filter by status (exact match)
-- `company`: Filter by company (partial match)
-- `skip`: Pagination offset (default: 0)
-- `limit`: Pagination limit (default: 100)
+**filters you can use:**
+`name`, `company`, `status`, `skip`, `limit`
 
-**Valid Status Values:**
-- New
-- Interested
-- In Progress
-- Closed
-- Lost
+**status values:**
+New, Interested, In Progress, Closed, Lost
+
+---
 
 ### Interactions
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/interactions/` | Log a new interaction |
-| GET | `/interactions/` | Get all interactions (with filters) |
-| GET | `/interactions/{id}` | Get a specific interaction |
-| DELETE | `/interactions/{id}` | Delete an interaction |
+| Method | Endpoint             | What it does  |
+| ------ | -------------------- | ------------- |
+| POST   | `/interactions/`     | log a new one |
+| GET    | `/interactions/`     | list all      |
+| GET    | `/interactions/{id}` | get one       |
+| DELETE | `/interactions/{id}` | delete one    |
 
-**Valid Interaction Types:**
-- Call
-- Email
-- Meeting
+**types:** Call, Email, Meeting
+
+---
 
 ### Reports
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/reports/leads-by-status` | Count of leads by status |
-| GET | `/reports/interactions-summary` | Count of interactions by type |
-| GET | `/reports/dashboard` | Comprehensive dashboard data |
+| Method | Endpoint                        | What it does                  |
+| ------ | ------------------------------- | ----------------------------- |
+| GET    | `/reports/leads-by-status`      | see how many leads per status |
+| GET    | `/reports/interactions-summary` | count interactions by type    |
+| GET    | `/reports/dashboard`            | everything at once            |
 
-## Usage Examples
+---
 
-### Create a Lead
+## Example Commands
+
+### create a lead
+
 ```bash
 curl -X POST "http://localhost:8000/leads/" \
   -H "Content-Type: application/json" \
@@ -146,85 +163,90 @@ curl -X POST "http://localhost:8000/leads/" \
   }'
 ```
 
-### Get All Leads
+### get all leads
+
 ```bash
 curl "http://localhost:8000/leads/"
 ```
 
-### Filter Leads by Status
+### filter by status
+
 ```bash
 curl "http://localhost:8000/leads/?status=Interested"
 ```
 
-### Update Lead Status
+### update a lead
+
 ```bash
 curl -X PUT "http://localhost:8000/leads/1" \
   -H "Content-Type: application/json" \
   -d '{"status": "In Progress"}'
 ```
 
-### Log an Interaction
+### log an interaction
+
 ```bash
 curl -X POST "http://localhost:8000/interactions/" \
   -H "Content-Type: application/json" \
   -d '{
     "lead_id": 1,
     "interaction_type": "Call",
-    "notes": "Discussed product features and pricing"
+    "notes": "talked about pricing"
   }'
 ```
 
-### Get Dashboard Report
-```bash
-curl "http://localhost:8000/reports/dashboard"
-```
+---
 
 ## Database
 
-The application uses SQLite with a file named `crm.db` created automatically on first run.
+It uses **SQLite** (because it’s easy).
+When you run it for the first time, it makes a file called `crm.db`.
 
 **Tables:**
-- `leads`: Stores customer lead information
-- `interactions`: Stores interaction logs linked to leads
 
-## Development
+* `leads` → stores leads
+* `interactions` → logs calls/emails/meetings
 
-### Adding New Features
+---
 
-1. **Add a new model** in `models.py`
-2. **Create corresponding schema** in `schemas.py`
-3. **Create router** in `routers/` directory
-4. **Include router** in `main.py`
+## Dev Notes
 
-### Running Tests
+If you want to add new stuff:
 
-You can add tests using pytest:
+1. Add the model in `models.py`
+2. Add the schema in `schemas.py`
+3. Make a new router in `routers/`
+4. Import it in `main.py`
+
+### Testing
+
 ```bash
 pip install pytest httpx
 pytest
 ```
 
-## Error Handling
+Not gonna lie I didn’t write a ton of tests but it runs fine.
 
-The API returns appropriate HTTP status codes:
-- `200`: Success
-- `201`: Created
-- `204`: No Content (successful deletion)
-- `400`: Bad Request (validation error, duplicate email)
-- `404`: Not Found
-- `422`: Unprocessable Entity (validation error)
+---
 
-## Future Enhancements
+## Error Codes
 
-- [ ] Authentication & Authorization (JWT)
-- [ ] Email notifications
-- [ ] File attachments for leads
-- [ ] Advanced search with multiple filters
-- [ ] Export data to CSV/Excel
-- [ ] Frontend dashboard UI
-- [ ] Activity timeline for each lead
-- [ ] Lead assignment to sales reps
+* 200 → OK
+* 201 → Created
+* 204 → Deleted successfully
+* 400 → Bad request (usually bad data)
+* 404 → Not found
+* 422 → Validation error
 
-## License
+---
 
-MIT License - Feel free to use and modify as needed!
+## Future Stuff (if I ever get to it)
+
+* [ ] JWT auth (so people can log in)
+* [ ] Email notifications
+* [ ] Upload files to leads
+* [ ] More filters
+* [ ] Export to CSV or Excel
+* [ ] Simple front-end UI
+* [ ] Timeline view
+* [ ] Assign leads to users
