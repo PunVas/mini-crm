@@ -1,1 +1,22 @@
-venv/*
+```
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+server.log
+
+# Dependencies
+venv/
+.venv/
+
+# Database
+crm.db
+
+# Frontend
+frontend/
+frontend.html
+```
